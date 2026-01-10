@@ -1,18 +1,22 @@
+using LMS.Domain.Enums;
 
-namespace LMS.Domain.Enums
+namespace LMS.Domain.Entities
 {
-    public class UserEntity : SoftDeletableEntity
+    public class User : SoftDeletableEntity
     {
-        public string UserName {get; private set;}
+        public string Name {get; private set;}
+
+        public string Email{get; private set;}
         public string PasswordHash {get; private set;}
-        public UserRole Role {get; set;} 
+        public UserRole Role {get; private set;} 
 
-        protected User(){ }
+        protected User(){}
 
-        public User(string userName, string PasswordHash)
+        public User(string name,string email, string passwordHash)
         {
-            UserName = userName;
-            PasswordHash = PasswordHash;
+            Name = name;
+            Email = email;
+            PasswordHash = passwordHash;
             Role = UserRole.Member;
         }
 
@@ -28,6 +32,11 @@ namespace LMS.Domain.Enums
         public void ChangePassword(string newPasswordHash)
         {
             PasswordHash = newPasswordHash;
+        }
+
+        public void ChangeName(string name)
+        {
+            Name = name;
         }
     }
 }
