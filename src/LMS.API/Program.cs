@@ -1,4 +1,8 @@
+
+using LMS.Infrastructure.Persistence;
+
 var builder = WebApplication.CreateBuilder(args);
+
 
 // Add services to the container.
 
@@ -20,6 +24,12 @@ if (app.Environment.IsDevelopment())
     });
 }
 Console.WriteLine(app.Environment.EnvironmentName); // Should print "Development"
+
+using (var scope = app.Services.CreateScope())
+{
+    var seeder = scope.ServiceProvider.GetRequiredService<AdminSeeder>();
+    await seeder.SeedAsync();
+}
 
 app.UseHttpsRedirection();
 
